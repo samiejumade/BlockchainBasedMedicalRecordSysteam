@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center"><a href="https://medichain.biz/" target="_blank">MediChain</a></h1>
+  <h1 align="center"><a href="/" target="_blank">GauMedi</a></h1>
   <p align="center">
     Revolutionizing healthcare data management: blockchain-based medical record storage for patients and insurance companies
 
@@ -44,7 +44,7 @@ The data privacy of patients is essential because it involves sensitive personal
 
 ## ℹ️ About The Project
 
-Our project MediChain seeks to address these challenges by leveraging the power of blockchain to create a secure, decentralized platform for storing and sharing healthcare data. By doing so, we hope to empower patients and Insurance providers, to make more informed decisions, improve outcomes, and advance the field of healthcare as a whole.
+Our project GauMedi seeks to address these challenges by leveraging the power of blockchain to create a secure, decentralized platform for storing and sharing healthcare data. By doing so, we hope to empower patients and Insurance providers, to make more informed decisions, improve outcomes, and advance the field of healthcare as a whole.
 
 ## ℹ️ Future Prospects
 1. We will be implementing insurance policy as ERC-721 Standard (i.e Non-Fungible Tokens), so as to specify the uniqueness and ownership of each insurance policy.
@@ -108,4 +108,4 @@ npm run client:start
 
 7. Now, obtain the private keys of some of the accounts from Ganache and import the accounts into Metamask wallet.
 
-8. You're ready to go. Visit [http://localhost:3000/](http://localhost:3000/) to check out MediChain
+8. You're ready to go. Visit [http://localhost:3000/](http://localhost:3000/) to check out 

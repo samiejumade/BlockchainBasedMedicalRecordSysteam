@@ -12,6 +12,7 @@ import SiteNavbar from './components/SiteNavbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
+
 // const auth = 'Basic ' + Buffer.from(process.env.REACT_APP_INFURA_PROJECT_ID + ':' + process.env.REACT_APP_INFURA_API_KEY_SECRET).toString('base64');
 // const ipfs = create({
 //   host: 'ipfs.infura.io',

@@ -140,7 +140,7 @@ const Patient = ({mediChain, account, ethValue}) => {
 
   const handleShowRecordModal = async () => {
     var record = {};
-    await fetch(`${process.env.REACT_APP_PINATA_DEDICATED_GATEWAY}/ipfs/${patient.record}`)
+    await fetch(`https://gateway.pinata.cloud/ipfs/${patient.record}`)
       .then(res => res.json())
       .then(data => record = data);
     await setPatientRecord(record);

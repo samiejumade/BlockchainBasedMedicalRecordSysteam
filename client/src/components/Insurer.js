@@ -85,7 +85,7 @@ const Insurer = ({mediChain, account, ethValue}) => {
         }
     };
 
-    console.log("claimsList:", claimsList);
+    // console.log("claimsList:", claimsList);
 
     // const approveClaim = async (e, claim) => {
     //     let value = claim.valueClaimed/ethValue;

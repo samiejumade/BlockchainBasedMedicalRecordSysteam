@@ -97,14 +97,14 @@ const Register = ({mediChain, ipfs, connectWallet, token, account, setToken, set
                 <br />
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formWallet">
-                        <Form.Label>Connect Wallet</Form.Label>
+                        <Form.Label className='form-label'>Connect Wallet</Form.Label>
                         { account === "" ?
                         <Form.Control type="button" value="Connect to Metamask" onClick={connectWallet}/>
                         : <Form.Control type="button" disabled value={`Connected Wallet with Address: ${account}`}/>
                         }
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formDesignation">
-                        <Form.Label>Designation</Form.Label>
+                        <Form.Label className='form-label'>Designation</Form.Label>
                         <Form.Select onChange={(e) => setDesignation(e.target.value)} value={designation}>
                             <option value="1">Patient</option>
                             <option value="2">Doctor</option>
@@ -112,16 +112,16 @@ const Register = ({mediChain, ipfs, connectWallet, token, account, setToken, set
                         </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formName">
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label className='form-label'>Name</Form.Label>
                         <Form.Control required type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your name" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formEmail">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label className='form-label'>Email</Form.Label>
                         <Form.Control required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
                     </Form.Group>
                     { designation==="1" ?
                     <Form.Group className="mb-3" controlId="formAge">
-                        <Form.Label>Age</Form.Label>
+                        <Form.Label className='form-label'>Age</Form.Label>
                         <Form.Control type="number" value={age} min={18} onChange={(e) => setAge(e.target.value)} placeholder="Enter your age" />
                     </Form.Group>
                     : <></>

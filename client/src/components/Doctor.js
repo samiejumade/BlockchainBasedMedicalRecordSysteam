@@ -125,6 +125,35 @@ const Doctor = ({ipfs, mediChain, account}) => {
   //   })
   // }
 
+
+// patient fallback gateway : changed by SOBIT
+  // const gateways = [
+  //   'https://gateway.pinata.cloud/ipfs/',
+  //   `${process.env.REACT_APP_PINATA_DEDICATED_GATEWAY}/ipfs/`,
+  //   'https://ipfs.io/ipfs/'
+  // ];
+  
+  // const fetchWithFallback = async (hash) => {
+  //   for (let gateway of gateways) {
+  //     try {
+  //       const response = await fetch(`${gateway}${hash}`);
+  //       if (response.ok) {
+  //         const contentType = response.headers.get("content-type");
+  //         if (contentType && contentType.includes("application/json")) {
+  //           return await response.json();
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error(`Failed to fetch from ${gateway}:`, error);
+  //     }
+  //   }
+  //   throw new Error("Failed to fetch from all gateways");
+  // };
+
+
+
+
+
   const submitDiagnosis = async (e) => {
     console.log('privatekey', process.env.REACT_APP_PINATA_API_KEY)
 
@@ -156,9 +185,15 @@ const Doctor = ({ipfs, mediChain, account}) => {
       }
     }
 
+
+    // const record = await fetchWithFallback(patient.record);
+    console.log('record', process.env.REACT_APP_PINATA_API_KEY)
     var record = {}
-    await fetch(`${process.env.REACT_APP_PINATA_DEDICATED_GATEWAY}/ipfs/${patient.record}`)
-      .then(res => res.json())
+    await fetch(`https://gateway.pinata.cloud/ipfs/${patient.record}`)
+      .then(res => {
+        console.log('response', res)
+        return  res.json()
+      })
       .then(data => {
         record = data;
       })
@@ -287,7 +322,7 @@ const Doctor = ({ipfs, mediChain, account}) => {
                 </tbody>
               </Table>
           </div>
-          { patient ? <Modal id="modal" size="lg" centered show={showModal} onHide={handleCloseModal}>
+          { patient ? <Modal id="modal" size="lg" className='modal' centered show={showModal} onHide={handleCloseModal}>
             <Modal.Header closeButton>
               <Modal.Title id="modalTitle">Enter diagnosis for: {patient.name}</Modal.Title>
             </Modal.Header>
