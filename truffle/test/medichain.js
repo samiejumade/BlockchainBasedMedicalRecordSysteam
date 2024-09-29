@@ -1,19 +1,19 @@
-const MediChain = artifacts.require("MediChain");
+const GauMedi = artifacts.require("GauMedi");
 
 require('chai')
     .use(require('chai-as-promised'))
     .should()
 
-contract('MediChain', ([deployer, patientOne, patientTwo, doctorOne, doctorTwo, insurerOne, insurerTwo]) => {
-    let mediChain
+contract('GauMedi', ([deployer, patientOne, patientTwo, doctorOne, doctorTwo, insurerOne, insurerTwo]) => {
+    let gauMedi
 
     before(async () => {
-        mediChain = await MediChain.deployed()
+        gauMedi = await GauMedi.deployed()
     })
 
     describe('deployment', async () => {
         it('deploys successfully', async () => {
-            const address = await mediChain.address
+            const address = await gauMedi.address
             assert.notEqual(address, 0x0)
             assert.notEqual(address, '')
             assert.notEqual(address, null)
@@ -21,8 +21,8 @@ contract('MediChain', ([deployer, patientOne, patientTwo, doctorOne, doctorTwo, 
         })
     
         it('has a name', async () => {
-            const name = await mediChain.name()
-            assert.equal(name, 'mediChain')
+            const name = await gauMedi.name()
+            assert.equal(name, 'gauMedi')
         })
     })
 
@@ -34,7 +34,7 @@ contract('MediChain', ([deployer, patientOne, patientTwo, doctorOne, doctorTwo, 
 
 
         before(async () => {
-            result = await mediChain.add_agent(name, age, 0, hash)
+            result = await gauMedi.add_agent(name, age, 0, hash)
             
         })
 

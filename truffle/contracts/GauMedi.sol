@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-contract MediChain {
+contract GauMedi {
     // State Variables
     string public name;
     // uint public countPatients;
@@ -82,7 +82,7 @@ contract MediChain {
     
 
     constructor(){
-        name = "medichain";
+        name = "gaumedi";
         claimsCount = 0;
         transactionCount = 0;
     }

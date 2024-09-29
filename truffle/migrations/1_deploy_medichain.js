@@ -1,5 +1,5 @@
-const MediChain = artifacts.require("MediChain");
+const GauMedi = artifacts.require("GauMedi");
 
 module.exports = function (deployer) {
-  deployer.deploy(MediChain);
+  deployer.deploy(GauMedi);
 };

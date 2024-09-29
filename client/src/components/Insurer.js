@@ -9,7 +9,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Web3 from 'web3';
 import {Link} from 'react-router-dom'
 
-const Insurer = ({mediChain, account, ethValue}) => {
+const Insurer = ({gauMedi, account, ethValue}) => {
     const [insurer, setInsurer] = useState(null);
     const [patList, setPatList] = useState([]);
     const [policyList, setPolicyList] = useState([]);
@@ -24,16 +24,16 @@ const Insurer = ({mediChain, account, ethValue}) => {
     const [patientRecord, setPatientRecord] = useState(null);
   
     const getInsurerData = async () => {
-        var insurer = await mediChain.methods.insurerInfo(account).call();
+        var insurer = await gauMedi.methods.insurerInfo(account).call();
         setInsurer(insurer);
     }
     const getPolicyList = async () => {
-        var pol = await mediChain.methods.getInsurerPolicyList(account).call();
+        var pol = await gauMedi.methods.getInsurerPolicyList(account).call();
         setPolicyList(pol)
     }
     const createPolicy = (e) => {
         e.preventDefault()
-        mediChain.methods.createPolicy(polName, polCoverValue, polDuration, polPremium).send({from: account}).on('transactionHash', (hash) => {
+        gauMedi.methods.createPolicy(polName, polCoverValue, polDuration, polPremium).send({from: account}).on('transactionHash', (hash) => {
             return window.location.href = '/login'
         })
     }
@@ -47,21 +47,21 @@ const Insurer = ({mediChain, account, ethValue}) => {
         await setShowRecordModal(true);
     }
     const getPatientList = async () => {
-        var pat = await mediChain.methods.getInsurerPatientList(account).call();
+        var pat = await gauMedi.methods.getInsurerPatientList(account).call();
         let pt = [];
         for(let i=0; i<pat.length; i++){
-            let patient = await mediChain.methods.patientInfo(pat[i]).call();
+            let patient = await gauMedi.methods.patientInfo(pat[i]).call();
             pt = [...pt, patient]
         }
         setPatList(pt)
     }
     // const getClaimsData = async () => {
-    //     var claimsIdList = await mediChain.methods.getInsurerClaims(account).call();
+    //     var claimsIdList = await gauMedi.methods.getInsurerClaims(account).call();
     //     let cl = [];
     //     for(let i=claimsIdList.length-1; i>=0; i--){
-    //         let claim = await mediChain.methods.claims(claimsIdList[i]).call();
-    //         let patient = await mediChain.methods.patientInfo(claim.patient).call();
-    //         let doctor = await mediChain.methods.doctorInfo(claim.doctor).call();
+    //         let claim = await gauMedi.methods.claims(claimsIdList[i]).call();
+    //         let patient = await gauMedi.methods.patientInfo(claim.patient).call();
+    //         let doctor = await gauMedi.methods.doctorInfo(claim.doctor).call();
     //         claim = {...claim, id: claimsIdList[i], patientEmail: patient.email, doctorEmail: doctor.email, policyName: claim.policyName}
     //         cl = [...cl, claim];
     //     }
@@ -70,12 +70,12 @@ const Insurer = ({mediChain, account, ethValue}) => {
 
     const getClaimsData = async () => {
         try {
-            var claimsIdList = await mediChain.methods.getInsurerClaims(account).call();
+            var claimsIdList = await gauMedi.methods.getInsurerClaims(account).call();
             let cl = [];
             for (let i = claimsIdList.length - 1; i >= 0; i--) {
-                let claim = await mediChain.methods.claims(claimsIdList[i]).call();
-                let patient = await mediChain.methods.patientInfo(claim.patient).call();
-                let doctor = await mediChain.methods.doctorInfo(claim.doctor).call();
+                let claim = await gauMedi.methods.claims(claimsIdList[i]).call();
+                let patient = await gauMedi.methods.patientInfo(claim.patient).call();
+                let doctor = await gauMedi.methods.doctorInfo(claim.doctor).call();
                 claim = { ...claim, id: claimsIdList[i], patientEmail: patient.email, doctorEmail: doctor.email, policyName: claim.policyName };
                 cl = [...cl, claim];
             }
@@ -89,7 +89,7 @@ const Insurer = ({mediChain, account, ethValue}) => {
 
     // const approveClaim = async (e, claim) => {
     //     let value = claim.valueClaimed/ethValue;
-    //     mediChain.methods.approveClaimsByInsurer(claim.id).send({from: account, value: Web3.utils.toWei(value.toString(), 'Ether')}).on('transactionHash', (hash) => {
+    //     gauMedi.methods.approveClaimsByInsurer(claim.id).send({from: account, value: Web3.utils.toWei(value.toString(), 'Ether')}).on('transactionHash', (hash) => {
     //         return window.location.href = '/login'
     //     })
     // }
@@ -98,7 +98,7 @@ const Insurer = ({mediChain, account, ethValue}) => {
         e.preventDefault();
         let value = claim.valueClaimed / ethValue;
         try {
-            await mediChain.methods.approveClaimsByInsurer(claim.id).send({
+            await gauMedi.methods.approveClaimsByInsurer(claim.id).send({
                 from: account,
                 value: Web3.utils.toWei(value.toString(), 'Ether')
             }).on('transactionHash', (hash) => {
@@ -116,7 +116,7 @@ const Insurer = ({mediChain, account, ethValue}) => {
     };
 
     const rejectClaim = async (e, claim) => {
-        mediChain.methods.rejectClaimsByInsurer(claim.id).send({from: account}).on('transactionHash', (hash) => {
+        gauMedi.methods.rejectClaimsByInsurer(claim.id).send({from: account}).on('transactionHash', (hash) => {
             return window.location.href = '/login'
         })
     }
