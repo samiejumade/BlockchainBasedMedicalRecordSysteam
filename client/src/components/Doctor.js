@@ -8,7 +8,7 @@ import { Buffer } from 'buffer';
 import { Link } from 'react-router-dom'
 
 
-const Doctor = ({ipfs, mediChain, account}) => {
+const Doctor = ({ipfs, gauMedi, account}) => {
   const [doctor, setDoctor] = useState(null);
   const [patient, setPatient] = useState(null);
   const [patientRecord, setPatientRecord] = useState(null);
@@ -22,26 +22,26 @@ const Doctor = ({ipfs, mediChain, account}) => {
   const [transactionsList, setTransactionsList] = useState([]);
 
   const getDoctorData = async () => {
-    var doctor = await mediChain.methods.doctorInfo(account).call();
+    var doctor = await gauMedi.methods.doctorInfo(account).call();
     setDoctor(doctor);
   }
   const getPatientAccessList = async () => {
-    var pat = await mediChain.methods.getDoctorPatientList(account).call();
+    var pat = await gauMedi.methods.getDoctorPatientList(account).call();
     let pt = []
     for(let i=0; i<pat.length; i++){
-      let patient = await mediChain.methods.patientInfo(pat[i]).call();
+      let patient = await gauMedi.methods.patientInfo(pat[i]).call();
       patient = { ...patient, account:pat[i] }
       pt = [...pt, patient]
     }
     setPatList(pt);
   }
   const getTransactionsList = async () => {
-    var transactionsIdList = await mediChain.methods.getDoctorTransactions(account).call();
+    var transactionsIdList = await gauMedi.methods.getDoctorTransactions(account).call();
     let tr = [];
     for(let i=transactionsIdList.length-1; i>=0; i--){
-        let transaction = await mediChain.methods.transactions(transactionsIdList[i]).call();
-        let sender = await mediChain.methods.patientInfo(transaction.sender).call();
-        if(!sender.exists) sender = await mediChain.methods.insurerInfo(transaction.sender).call();
+        let transaction = await gauMedi.methods.transactions(transactionsIdList[i]).call();
+        let sender = await gauMedi.methods.patientInfo(transaction.sender).call();
+        if(!sender.exists) sender = await gauMedi.methods.insurerInfo(transaction.sender).call();
         transaction = {...transaction, id: transactionsIdList[i], senderEmail: sender.email}
         tr = [...tr, transaction];
     }
@@ -118,12 +118,41 @@ const Doctor = ({ipfs, mediChain, account}) => {
   //       console.log(error);
   //       return;
   //     }else{
-  //       mediChain.methods.insuranceClaimRequest(patient.account, result.path, charges).send({from: account}).on('transactionHash', (hash) => {
+  //       gauMedi.methods.insuranceClaimRequest(patient.account, result.path, charges).send({from: account}).on('transactionHash', (hash) => {
   //         return window.location.href = '/login'
   //       })
   //     }
   //   })
   // }
+
+
+// patient fallback gateway : changed by SOBIT
+  // const gateways = [
+  //   'https://gateway.pinata.cloud/ipfs/',
+  //   `${process.env.REACT_APP_PINATA_DEDICATED_GATEWAY}/ipfs/`,
+  //   'https://ipfs.io/ipfs/'
+  // ];
+  
+  // const fetchWithFallback = async (hash) => {
+  //   for (let gateway of gateways) {
+  //     try {
+  //       const response = await fetch(`${gateway}${hash}`);
+  //       if (response.ok) {
+  //         const contentType = response.headers.get("content-type");
+  //         if (contentType && contentType.includes("application/json")) {
+  //           return await response.json();
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error(`Failed to fetch from ${gateway}:`, error);
+  //     }
+  //   }
+  //   throw new Error("Failed to fetch from all gateways");
+  // };
+
+
+
+
 
   const submitDiagnosis = async (e) => {
     console.log('privatekey', process.env.REACT_APP_PINATA_API_KEY)
@@ -156,9 +185,15 @@ const Doctor = ({ipfs, mediChain, account}) => {
       }
     }
 
+
+    // const record = await fetchWithFallback(patient.record);
+    console.log('record', process.env.REACT_APP_PINATA_API_KEY)
     var record = {}
-    await fetch(`${process.env.REACT_APP_PINATA_DEDICATED_GATEWAY}/ipfs/${patient.record}`)
-      .then(res => res.json())
+    await fetch(`https://gateway.pinata.cloud/ipfs/${patient.record}`)
+      .then(res => {
+        console.log('response', res)
+        return  res.json()
+      })
       .then(data => {
         record = data;
       })
@@ -193,7 +228,7 @@ const Doctor = ({ipfs, mediChain, account}) => {
       }
 
       const result = await response.json();
-      mediChain.methods.insuranceClaimRequest(patient.account, result.IpfsHash, charges).send({from: account}).on('transactionHash', (hash) => {
+      gauMedi.methods.insuranceClaimRequest(patient.account, result.IpfsHash, charges).send({from: account}).on('transactionHash', (hash) => {
         return window.location.href = '/login'
       })
     } catch (error) {
@@ -287,7 +322,7 @@ const Doctor = ({ipfs, mediChain, account}) => {
                 </tbody>
               </Table>
           </div>
-          { patient ? <Modal id="modal" size="lg" centered show={showModal} onHide={handleCloseModal}>
+          { patient ? <Modal id="modal" size="lg" className='modal' centered show={showModal} onHide={handleCloseModal}>
             <Modal.Header closeButton>
               <Modal.Title id="modalTitle">Enter diagnosis for: {patient.name}</Modal.Title>
             </Modal.Header>

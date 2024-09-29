@@ -16,15 +16,16 @@ const SiteNavbar = ({token, account, setAccount, setToken}) => {
     return (
         <Navbar collapseOnSelect expand="md" variant="dark" bg='coolColor' fixed="top" className="site-navbar">
             <Container>
-                <Navbar.Brand as={Link} to="/"><img className='ml-2' height="40" src={logo} /></Navbar.Brand>
+                {/* <Navbar.Brand as={Link} to="/"><img className='ml-2' height="40" src={logo} /></Navbar.Brand> */}
+                <h2 className="navbar-logo">GauMedi</h2>
                 <Nav justify>
                     { token!=='' && account!=="" ? 
                         <>
                             <Nav.Link className='img'>
                                 <img
-                                    className='ml-2'
-                                    width='40'
-                                    height='40'
+                                    className='ml-2 img-avatar'
+                                    width='30'
+                                    height='30'
                                     src={`data:image/png;base64,${new Identicon(account, 40).toString()}`}
                                     alt="profile"
                                 />
@@ -35,7 +36,7 @@ const SiteNavbar = ({token, account, setAccount, setToken}) => {
                                 </small>
                             </Nav.Link>
                             <Nav.Link onClick={logout}>
-                                <small className='text-nav'>
+                                <small className='text-nav logout-btn'>
                                     Log&nbsp;Out
                                 </small>
                             </Nav.Link>
