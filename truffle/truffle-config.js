@@ -43,6 +43,7 @@
 
 require('dotenv').config();
 const { MNEMONIC, PROJECT_ID } = process.env;
+console.log('mnemonic&projectId',MNEMONIC, PROJECT_ID);
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 
