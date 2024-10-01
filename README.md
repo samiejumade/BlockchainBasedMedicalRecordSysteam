@@ -2,11 +2,6 @@
   <h1 align="center"><a href="/" target="_blank">GauMedi</a></h1>
   <p align="center">
     Revolutionizing healthcare data management: blockchain-based medical record storage for patients and insurance companies
-
-    https://github.com/samWoxsen/Mediwox/assets/YOUR_USER_ID/MediWox_blockchain_based_Medical_record.mp4
-
-
-  <!-- https://user-images.githubusercontent.com/66792720/232314462-c424ec69-5868-4194-9311-9d9ab89e18fe.mp4 -->
   </p>
 </p>
 
@@ -40,11 +35,11 @@
 
 ## ℹ️ Problem Statement
 
-The data privacy of patients is essential because it involves sensitive personal information, such as medical records, test results, and health history. If failed to do so it can result in various consequences, such as financial loss, identity theft, damage to reputation, and even physical harm. It can also lead to discrimination, as individuals with certain health conditions may face challenges in obtaining health insurance.
+Protecting patient data privacy is crucial due to the sensitive nature of personal information, including medical records, test results, and health histories. Breaches in data privacy can lead to serious repercussions, such as financial losses, identity theft, damage to one’s reputation, and even potential physical harm. Furthermore, individuals with specific health conditions may experience discrimination, making it harder for them to secure health insurance. Ensuring robust privacy measures is essential to safeguard patients and uphold their rights.
 
 ## ℹ️ About The Project
 
-Our project GauMedi seeks to address these challenges by leveraging the power of blockchain to create a secure, decentralized platform for storing and sharing healthcare data. By doing so, we hope to empower patients and Insurance providers, to make more informed decisions, improve outcomes, and advance the field of healthcare as a whole.
+Our project, GauMedi, aims to tackle the challenges of data privacy in healthcare by utilizing blockchain technology to establish a secure and decentralized platform for storing and sharing medical information. This approach not only enhances data security but also empowers patients and insurance providers to make informed decisions, ultimately leading to better health outcomes and advancements in the healthcare sector. Additionally, we’ve made significant improvements to the user interface and functionality to ensure a seamless experience for all users.
 
 ## ℹ️ Future Prospects
 1. We will be implementing insurance policy as ERC-721 Standard (i.e Non-Fungible Tokens), so as to specify the uniqueness and ownership of each insurance policy.
@@ -92,9 +87,9 @@ npm run truffle:install
 
 4. Obtain Infura API Key and API Secret for IPFS from [Infura Dashboard](https://infura.io/), and create a dedicated gateway for your project. Set the environment variables in `client/.env` file. Or you can rename `client/.env.example` to `client/.env`
 ```bash
-REACT_APP_INFURA_PROJECT_ID=...
-REACT_APP_INFURA_API_KEY_SECRET=...
-REACT_APP_INFURA_DEDICATED_GATEWAY=....
+REACT_APP_PINATA_API_KEY=....
+REACT_APP_PINATA_API_SECRET=....
+REACT_APP_PINATA_JWT_TOKEN=....
 ```
 
 5. Then, copy the following commands to deploy the smart contracts to the local Ethereum blockchain and start the React app:
@@ -104,7 +99,7 @@ npm run truffle:migrate
 npm run client:start
 ```
 
-6. Set up Metamask to connect to the local blockchain created by Ganache(i.e. [http://localhost:8545/](http://localhost:8545/))
+6. Set up Metamask to connect to the local blockchain created by Ganache(i.e. [http://localhost:7545/](http://localhost:7545/))
 
 7. Now, obtain the private keys of some of the accounts from Ganache and import the accounts into Metamask wallet.
 
